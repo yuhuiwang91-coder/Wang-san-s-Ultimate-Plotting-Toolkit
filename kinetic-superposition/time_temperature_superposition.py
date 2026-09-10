@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit, minimize
 # === Read raw data ===
-df = pd.read_excel("hill.xlsx")
+df = pd.read_excel("data/hill_temperature.xlsx")
 df.columns = df.columns.str.strip()
 df = df[df['time'] > 0]
 # === Set reference temperature ===

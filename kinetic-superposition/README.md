@@ -1,67 +1,85 @@
 # Kinetic superposition analysis
 
-This directory contains the two Python scripts used for the kinetic superposition analyses reported in the associated manuscript.
+This directory contains the experimental input data and Python scripts used for the time–temperature and time–pressure kinetic superposition analyses in the associated manuscript.
+
+## Directory structure
+
+```text
+kinetic-superposition/
+├── README.md
+├── requirements.txt
+├── time_temperature_superposition.py
+├── time_pressure_superposition.py
+└── data/
+    ├── hill_temperature.xlsx
+    └── hill_pressure.xlsx
+```
+
+## Experimental input data
+
+### `data/hill_temperature.xlsx`
+Experimental time–temperature dataset used by `time_temperature_superposition.py`.
+
+Columns:
+- `temperature` — experimental temperature (K)
+- `time` — reaction time (s)
+- `c_normalized` — structural response variable used in the modified Hill-function fitting
+
+The dataset contains measurements at 1173, 1373, 1573 and 1723 K, with reaction times of 600, 3600, 21600, 43200 and 86400 s at each temperature.
+
+### `data/hill_pressure.xlsx`
+Experimental time–pressure dataset used by `time_pressure_superposition.py`.
+
+Columns:
+- `pressure` — experimental pressure (GPa)
+- `time` — reaction time (s)
+- `c_normalized` — structural response variable used in the modified Hill-function fitting
+
+The dataset contains measurements at 0.5, 1, 2 and 3 GPa, with reaction times of 600, 3600, 21600, 43200 and 86400 s at each pressure.
 
 ## Scripts
 
 ### `time_temperature_superposition.py`
-Performs time–temperature superposition using a modified decreasing Hill function. The script uses 1373 K as the reference temperature, fits the reference master curve, determines multiplicative temperature shift factors (`alpha_T`) by minimizing the residual sum of squares, and exports the fitted parameters, shift factors, fit statistics, and the master-curve figure.
+Performs time–temperature superposition using a modified decreasing Hill function. The script uses 1373 K as the reference temperature, fits the reference master curve, determines multiplicative temperature shift factors (`alpha_T`) by minimizing the residual sum of squares, and exports the fitted parameters, shift factors, fit statistics and master-curve figure.
 
 ### `time_pressure_superposition.py`
-Performs time–pressure superposition using the same modified decreasing Hill function. The script uses 0.5 GPa as the reference pressure, determines multiplicative pressure shift factors (`alpha_P`), and exports the fitted parameters, shift factors, fit statistics, and the master-curve figure.
+Performs time–pressure superposition using the same modified decreasing Hill function. The script uses 0.5 GPa as the reference pressure, determines multiplicative pressure shift factors (`alpha_P`), and exports the fitted parameters, shift factors, fit statistics and master-curve figure.
 
-## Input data
+## Software requirements
 
-Both scripts read an Excel workbook named:
-
-`hill.xlsx`
-
-The workbook must contain at least the following columns:
-
-- `time` — reaction time (s); rows with `time <= 0` are excluded
-- `temperature` — experimental temperature (K)
-- `pressure` — experimental pressure (GPa)
-- `c_normalized` — unit-cell height / structural response variable used in the Hill-function fitting
-
-Place `hill.xlsx` in the same working directory as the scripts before running them.
-
-The input dataset used for the published calculations should be supplied with the article's Source Data / Supplementary Data or deposited in the associated data repository so that the analyses can be reproduced.
-
-## Required Python packages
-
-Install the required packages with:
+Install the required Python packages with:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-The scripts require `pandas`, `numpy`, `matplotlib`, `scipy`, and `openpyxl` (for Excel input/output).
+Required packages are `pandas`, `numpy`, `matplotlib`, `scipy` and `openpyxl`.
 
 ## Running the analyses
 
-From this directory, run:
+Run both scripts from the `kinetic-superposition` directory:
 
 ```bash
 python time_temperature_superposition.py
 python time_pressure_superposition.py
 ```
 
+The scripts read their corresponding Excel files automatically from the `data/` subdirectory.
+
 ## Main outputs
 
 The temperature-superposition script produces:
-
 - `temperature_shift_factors_multiply_corrected.xlsx`
 - `hill_master_curve_temperature_corrected.png`
 - `hill_fit_parameters_temperature_corrected.xlsx`
 - `hill_fit_statistics_temperature_corrected.xlsx`
 
 The pressure-superposition script produces:
-
 - `pressure_shift_factors_multiply_corrected.xlsx`
 - `hill_master_curve_multiply_corrected.png`
 - `hill_fit_parameters_corrected.xlsx`
 - `hill_fit_statistics_corrected.xlsx`
 
-## Notes
+## Reproducibility
 
-The scripts implement the analysis exactly as used for the associated manuscript, including a reference temperature of 1373 K and a reference pressure of 0.5 GPa. The repository version should be archived at publication in a DOI-minting repository (for example, Zenodo or Code Ocean) to provide a permanent, citable record of the code version used in the paper.
+The two scripts and the accompanying experimental input datasets were tested together after the data files were standardized. Both scripts run successfully and generate the expected output tables and figures.
