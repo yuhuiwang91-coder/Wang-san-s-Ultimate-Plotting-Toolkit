@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>黄麦岭野外地质地图 · GitHub Pages 手机版</title>
+<link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#0f766e">
+<link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<div id="map"></div>
+<div id="toolbar">
+  <button id="btnMenu">图层</button>
+  <button id="btnBase" data-sat="0">卫星图</button>
+  <button id="btnLocate">定位</button>
+  <button id="btnAddSample">新增样点</button>
+  <button id="btnSetup">高德设置</button>
+</div>
+<div id="scopebar"><b>黄麦岭 15 km 野外工作区 · 515 要素</b></div>
+<aside id="panel" class="open">
+  <div class="panel-head"><b>黄麦岭地质数据 · 原版1∶20万图式 · 手机版</b><button id="btnClosePanel">×</button></div>
+  <div class="tabs"><button class="tab active" data-tab="layers">图层</button><button class="tab" data-tab="search">搜索</button><button class="tab" data-tab="info">属性</button><button class="tab" data-tab="samples">样点</button><button class="tab" data-tab="about">数据审计</button></div>
+  <section id="tab-layers" class="tabbody active">
+    <h3 class="legend-first-title">H-50-01 大悟幅原版图例与地质符号</h3>
+    <div id="legend"></div>
+    <div class="raster-controls">
+      <label class="layer-row"><input type="checkbox" id="rasterH5001" checked><span>大悟幅 H-50-01 原版图</span><button type="button" id="focusH5001">定位</button></label>
+      <label class="layer-row"><input type="checkbox" id="rasterH5007" checked><span>黄陂幅 H-50-07 原版图</span><button type="button" id="focusH5007">定位</button></label>
+      <div class="slider-row"><label>原版图透明度</label><input id="rasterOpacitySlider" type="range" min="0" max="1" step="0.05" value="0.72"><span id="rasterOpacityValue">72%</span></div>
+    </div>
+    <h3>矢量查询层</h3>
+    <div id="layerSwitches"></div>
+    <div class="slider-row"><label>矢量面透明度</label><input id="opacitySlider" type="range" min="0" max="0.85" step="0.05" value="0.06"><span id="opacityValue">6%</span></div>
+  </section>
+  <section id="tab-search" class="tabbody">
+    <input id="searchInput" placeholder="搜索 黄麦岭、夏店、麻沟、矿产地、代号……">
+    <button id="btnSearch" class="wide">搜索全部属性</button>
+    <div id="searchResults"></div>
+  </section>
+  <section id="tab-info" class="tabbody"><div id="featureInfo" class="hint">点击地图上的地质对象查看全部原始属性。</div></section>
+  <section id="tab-samples" class="tabbody">
+    <div class="sample-actions"><button id="btnExportCSV">导出 CSV</button><button id="btnExportGeoJSON">导出 GeoJSON</button><button id="btnClearSamples">清空自采点</button></div>
+    <div id="sampleList"></div>
+  </section>
+  <section id="tab-about" class="tabbody">
+    <div class="about">
+      <p><b>源数据：</b>H5001（H-50-(1) 大悟幅）与 H5007（H-50-(7) 黄陂幅）1∶20万 MapGIS 6.x 数据。</p>
+      <p><b>工作范围：</b>手机版加载黄麦岭采样点周围15 km的515个地质对象，保留野外查询需要的主要原始属性和MapGIS图形参数。完整两图幅数据仍保留在桌面/GIS版本中。</p>
+      <p><b>坐标：</b>科研 GeoPackage 保持 WGS84；本网页数据为高德显示专用 GCJ-02。请勿把网页导出的 GCJ-02 当作科研测量坐标。</p>
+      <p><b>原图式恢复：</b>手机版 H5001 大悟幅源自你导出的 19084×11002 TIF，经移动端优化后显示，主图经北京54到 WGS84、再到 GCJ-02 的非线性栅格重采样后叠加到高德；H5007 暂沿用此前原图。原图中的地层颜色、侵入岩颜色、填充花纹、断层线型、产状符号和文字标注均来自 MapGIS 原始渲染，不再由网页猜测。</p>
+      <p><b>使用建议：</b>卫星底图时原版图透明度建议 45–65%；纯查看地质图时可调至 90–100%。矢量层默认关闭，搜索或属性查询时再开启，避免覆盖原版颜色。</p>
+      <p><b>D13B：</b>原始数据确有 D13B 面图层，但公开标准表未给出该代码的明确专题含义，且源属性主要为空。本版不删除，按“其它/附加面图元”原样保留。</p>
+      <p><b>大磊山：</b>两幅属性表中检索不到“大磊山/磊山”文字标签，因此本版不会凭猜测给某个侵入岩面强行命名为“大磊山岩体”。</p>
+    </div>
+  </section>
+</aside>
+<div id="status"></div>
+<div id="legendModal" class="modal legend-modal"><div class="legend-modalbox">
+  <div class="legend-modal-head"><b id="legendModalTitle">原版图例</b><button data-close="legendModal">×</button></div>
+  <div class="legend-zoom-hint">可滚动查看；浏览器可用 Ctrl + / Ctrl - 放大缩小。</div>
+  <img id="legendModalImg" src="data/legend/H5001_legend.webp" alt="H5001 原版图例">
+</div></div>
+<div id="setupModal" class="modal"><div class="modalbox"><h2>高德 JS API 设置</h2><label>Web端 JS API Key<input id="amapKey"></label><label>securityJsCode<input id="securityCode"></label><div class="modal-actions"><button data-close="setupModal">取消</button><button id="btnSaveSetup" class="primary">保存并重新加载</button></div></div></div>
+<div id="sampleModal" class="modal"><div class="modalbox"><h2>新增采样点</h2><div id="sampleCoord" class="hint"></div><label>编号<input id="sampleCode"></label><label>岩性<input id="sampleLithology"></label><label>产状<input id="sampleAttitude"></label><label>距脉体/反应带<input id="sampleDistance"></label><label>流体/构造关系<input id="sampleRelation"></label><label>备注<textarea id="sampleNote"></textarea></label><div class="modal-actions"><button data-close="sampleModal">取消</button><button id="btnSaveSample" class="primary">保存</button></div></div></div>
+<script src="data/local_data.js"></script>
+<script src="data/raster_layers.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
