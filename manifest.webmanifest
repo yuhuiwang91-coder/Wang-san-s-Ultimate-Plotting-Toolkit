@@ -1,0 +1,9 @@
+{
+  "name": "黄麦岭野外地质地图",
+  "short_name": "黄麦岭地质图",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
+  "description": "高德底图 + 大悟幅/黄陂幅1:20万原版地质图 + 野外样点记录"
+}
